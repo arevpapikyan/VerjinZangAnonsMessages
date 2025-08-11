@@ -1,0 +1,318 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "chatId": "998583353",
+        "text": "={{ $('If').first().json.title }}\n{{ $('If').first().json.link }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1056,
+        -336
+      ],
+      "id": "98251a74-2343-4179-af9e-e593fcdde737",
+      "name": "Send a text message",
+      "webhookId": "eca6684b-1598-4e31-b40f-285bf32f6f02",
+      "credentials": {
+        "telegramApi": {
+          "id": "8CTVy36qVqrYeZod",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2339f38a-c933-44fc-9ed7-ba66395e07a0",
+              "leftValue": "={{ $json.title.toLowerCase() }}",
+              "rightValue": "վերջին զանգ",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "e4977862-8986-4d29-b057-078cdcbd811d",
+              "leftValue": "={{ $json.title.toLowerCase() }}",
+              "rightValue": "անոնս",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        432,
+        -288
+      ],
+      "id": "f52697e2-8479-4724-84a6-ec02b6eee7bb",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 10
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -16,
+        -288
+      ],
+      "id": "8e3c4e2f-b56b-408e-9752-ff4d2ada4238",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UC_yoNMPdmbZFK-ctvNJ_2Kg",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        -288
+      ],
+      "id": "16295037-e341-4df1-8dbf-cfed82b9fcdc",
+      "name": "RSS Read"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "13vWnP0i4hxw1XnfzUDQBS_rIqo11sBg8wNwj_DO80qU",
+          "mode": "list",
+          "cachedResultName": "verjin zang anons",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13vWnP0i4hxw1XnfzUDQBS_rIqo11sBg8wNwj_DO80qU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13vWnP0i4hxw1XnfzUDQBS_rIqo11sBg8wNwj_DO80qU/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "link",
+              "lookupValue": "={{ $json.link }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        640,
+        -432
+      ],
+      "id": "9cab3353-447a-4c85-9a0d-164b03e8ef25",
+      "name": "Get row(s) in sheet",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "6XelLwMU962tp0eF",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "397b8698-75d1-4f61-9f3a-fd3addfdb820",
+              "leftValue": "={{ $('Get row(s) in sheet').first().json.link }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        848,
+        -432
+      ],
+      "id": "d1563bbc-d29c-4477-9252-b49bef65c6b6",
+      "name": "If1",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "13vWnP0i4hxw1XnfzUDQBS_rIqo11sBg8wNwj_DO80qU",
+          "mode": "list",
+          "cachedResultName": "verjin zang anons",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13vWnP0i4hxw1XnfzUDQBS_rIqo11sBg8wNwj_DO80qU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13vWnP0i4hxw1XnfzUDQBS_rIqo11sBg8wNwj_DO80qU/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "link": "={{ $('If').first().json.link }}"
+          },
+          "matchingColumns": [
+            "link"
+          ],
+          "schema": [
+            {
+              "id": "link",
+              "displayName": "link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1232,
+        -336
+      ],
+      "id": "cd245708-d0c9-4ff2-95a0-02f37daf5c84",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "6XelLwMU962tp0eF",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "545eb198-a972-4c46-9b60-b7c054361ca0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "36ecbb7d04a74db54e0e4d8b55445ed8c24bc87e66d28797c24d531735546457"
+  },
+  "id": "sySNlqZsHYS8aoFs",
+  "tags": []
+}
