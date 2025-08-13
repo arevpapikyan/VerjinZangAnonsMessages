@@ -1,6 +1,78 @@
 {
-  "name": "My workflow",
+  "name": "verjin zang",
   "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -256,
+        32
+      ],
+      "id": "c2d226f7-3887-4773-8f3e-0f6b3ac20f09",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "url",
+              "value": "=https://www.youtube.com/watch?v={{ $json.id.videoId }}"
+            },
+            {
+              "name": "title",
+              "value": "={{ $json.snippet.title }}"
+            }
+          ],
+          "boolean": []
+        },
+        "options": {}
+      },
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        336,
+        -80
+      ],
+      "typeVersion": 1,
+      "id": "0f1483fe-c66d-467e-ae5c-c5ae3592acb2"
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "returnAll": true,
+        "filters": {
+          "channelId": "UC_yoNMPdmbZFK-ctvNJ_2Kg",
+          "publishedAfter": "={{ new Date(Date.now() - 5 * 60 * 1000).toISOString() }}"
+        },
+        "options": {}
+      },
+      "id": "7b7ef0de-44ba-402f-baa7-77040d332402",
+      "name": "Get many videos",
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        -64,
+        32
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "SKkYAqnv9AEbQRPE",
+          "name": "YouTube account 2"
+        }
+      }
+    },
     {
       "parameters": {
         "conditions": {
@@ -13,7 +85,7 @@
           "conditions": [
             {
               "id": "2339f38a-c933-44fc-9ed7-ba66395e07a0",
-              "leftValue": "={{ $json.title.toLowerCase() }}",
+              "leftValue": "={{ $json.snippet.title.toLowerCase() }}",
               "rightValue": "վերջին զանգ",
               "operator": {
                 "type": "string",
@@ -22,7 +94,7 @@
             },
             {
               "id": "e4977862-8986-4d29-b057-078cdcbd811d",
-              "leftValue": "={{ $json.title.toLowerCase() }}",
+              "leftValue": "={{ $json.snippet.title.toLowerCase() }}",
               "rightValue": "անոնս",
               "operator": {
                 "type": "string",
@@ -37,45 +109,11 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -160,
-        208
+        128,
+        32
       ],
-      "id": "b3972474-c5e0-4b5b-80ce-92f7b6a19d85",
+      "id": "bd6edf20-9848-48d6-bdf6-9ce2e03e1723",
       "name": "If"
-    },
-    {
-      "parameters": {
-        "rule": {
-          "interval": [
-            {
-              "field": "minutes",
-              "minutesInterval": 10
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.scheduleTrigger",
-      "typeVersion": 1.2,
-      "position": [
-        -608,
-        208
-      ],
-      "id": "47213261-bd5a-4487-9a4f-82660f6f78bf",
-      "name": "Schedule Trigger"
-    },
-    {
-      "parameters": {
-        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UC_yoNMPdmbZFK-ctvNJ_2Kg",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.rssFeedRead",
-      "typeVersion": 1.2,
-      "position": [
-        -384,
-        208
-      ],
-      "id": "fe369178-0ee6-4b6a-b9b3-2fb5a58ba2b3",
-      "name": "RSS Read"
     },
     {
       "parameters": {
@@ -93,85 +131,78 @@
           "cachedResultName": "Sheet1",
           "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13vWnP0i4hxw1XnfzUDQBS_rIqo11sBg8wNwj_DO80qU/edit#gid=0"
         },
-        "filtersUI": {
-          "values": [
-            {
-              "lookupColumn": "link",
-              "lookupValue": "={{ $json.link }}"
-            }
-          ]
-        },
         "options": {}
       },
+      "name": "Get Chat IDs",
       "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.6,
+      "typeVersion": 3,
       "position": [
-        48,
-        64
+        528,
+        -80
       ],
-      "id": "24a581a4-3b53-455b-842f-c2bee01bb919",
-      "name": "Get row(s) in sheet",
+      "id": "6bba9de3-7d86-422c-8bb6-edd35bee861b",
       "alwaysOutputData": true,
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "1h1dfZuPmCPYPEuI",
+          "id": "QV3lzFZwnIRDqStw",
           "name": "Google Sheets account"
         }
       }
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "397b8698-75d1-4f61-9f3a-fd3addfdb820",
-              "leftValue": "={{ $('RSS Read').first().json.link }}",
-              "rightValue": "={{ $('Get row(s) in sheet').last().json.link }}",
-              "operator": {
-                "type": "string",
-                "operation": "notEquals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
       },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1,
       "position": [
-        256,
-        64
+        -224,
+        320
       ],
-      "id": "fe7ed16f-1f31-48c3-a40f-6ef1eb0060c9",
-      "name": "If1",
-      "alwaysOutputData": true
+      "id": "aa64ed42-20b4-47b9-9258-50ffbc77237e",
+      "webhookId": "9eee5fc4-4bce-44a3-9c74-4fe3dfc0301b",
+      "credentials": {
+        "telegramApi": {
+          "id": "kTKcYBpCklMcYR6r",
+          "name": "Telegram account 2"
+        }
+      }
     },
     {
       "parameters": {
-        "chatId": "998583353",
-        "text": "={{ $('If').first().json.title }}\n{{ $('If').first().json.link }}",
-        "additionalFields": {}
+        "documentId": {
+          "__rl": true,
+          "value": "13vWnP0i4hxw1XnfzUDQBS_rIqo11sBg8wNwj_DO80qU",
+          "mode": "list",
+          "cachedResultName": "verjin zang anons",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13vWnP0i4hxw1XnfzUDQBS_rIqo11sBg8wNwj_DO80qU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13vWnP0i4hxw1XnfzUDQBS_rIqo11sBg8wNwj_DO80qU/edit#gid=0"
+        },
+        "options": {}
       },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
+      "name": "Get Existing IDs",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 3,
       "position": [
-        464,
-        -48
+        -32,
+        320
       ],
-      "id": "fe880aae-3a82-42d5-a528-e96b57a14c7c",
-      "name": "Send a text message",
-      "webhookId": "eca6684b-1598-4e31-b40f-285bf32f6f02",
+      "id": "10fb7526-51f8-4511-8583-79ec50c58760",
+      "alwaysOutputData": true,
       "credentials": {
-        "telegramApi": {
-          "id": "5MXf9pmrdmo8y1QI",
-          "name": "Telegram account"
+        "googleSheetsOAuth2Api": {
+          "id": "QV3lzFZwnIRDqStw",
+          "name": "Google Sheets account"
         }
       }
     },
@@ -192,72 +223,140 @@
           "cachedResultName": "Sheet1",
           "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13vWnP0i4hxw1XnfzUDQBS_rIqo11sBg8wNwj_DO80qU/edit#gid=0"
         },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "link": "={{ $('If').first().json.link }}"
-          },
-          "matchingColumns": [
-            "link"
-          ],
-          "schema": [
+        "fieldsUi": {
+          "fieldValues": [
             {
-              "id": "link",
-              "displayName": "link",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
+              "fieldId": "id",
+              "fieldValue": "={{ $json.id }}"
             }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
+          ]
         },
         "options": {}
       },
+      "name": "Save Chat ID",
       "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.6,
+      "typeVersion": 3,
       "position": [
-        640,
-        -48
+        592,
+        208
       ],
-      "id": "d991f7bd-d7ad-411f-b3f6-b734178a329b",
-      "name": "Append row in sheet",
+      "id": "6fa2653a-8981-4344-b872-defae5bb08d6",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "1h1dfZuPmCPYPEuI",
+          "id": "QV3lzFZwnIRDqStw",
           "name": "Google Sheets account"
         }
       }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "leftValue": "={{$json[\"isNew\"]}}",
+              "rightValue": "=",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              },
+              "id": "dd228d62-75e1-440a-befd-8a7c9c5df2f3"
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "name": "If New ID",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        384,
+        320
+      ],
+      "id": "50e08e02-6de9-4311-8e26-697ae8f88b24"
+    },
+    {
+      "parameters": {
+        "jsCode": "return $items(\"Get Chat IDs\").map(item => {\n  return {\n    json: {\n      chatId: item.json.id.toString(),\n      message: `${$('Set').first().json.title}\\n${$('Set').first().json.url}`\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        736,
+        -80
+      ],
+      "id": "34060aa0-5536-4044-b70b-ccf26073311d",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "chatId": "={{$json.chatId}}",
+        "text": "={{$json.message}}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        928,
+        -80
+      ],
+      "id": "53776e63-436c-454f-9321-3adad91bab5b",
+      "name": "Send a text message",
+      "webhookId": "ab2b535f-962d-4735-9bc0-38c75916ef0c",
+      "credentials": {
+        "telegramApi": {
+          "id": "kTKcYBpCklMcYR6r",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Incoming Telegram ID\nconst incomingId = String($items(\"Telegram Trigger\")[0].json.message.from.id).trim();\n\n// All existing IDs from the sheet\nconst existingIds = $input.all().map(item => String(item.json.id).trim());\n\n// Output true/false if new\nreturn [\n  {\n    json: {\n      isNew: !existingIds.includes(incomingId),\n      id: incomingId\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        176,
+        320
+      ],
+      "id": "907abc09-0e22-416d-aaff-d52e1d4ddb59",
+      "name": "Code1"
     }
   ],
   "pinData": {},
   "connections": {
-    "If": {
-      "main": [
-        [
-          {
-            "node": "Get row(s) in sheet",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Schedule Trigger": {
       "main": [
         [
           {
-            "node": "RSS Read",
+            "node": "Get many videos",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "RSS Read": {
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Get Chat IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many videos": {
       "main": [
         [
           {
@@ -268,18 +367,62 @@
         ]
       ]
     },
-    "Get row(s) in sheet": {
+    "If": {
       "main": [
         [
           {
-            "node": "If1",
+            "node": "Set",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "If1": {
+    "Get Chat IDs": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Existing IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Existing IDs": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If New ID": {
+      "main": [
+        [
+          {
+            "node": "Save Chat ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
       "main": [
         [
           {
@@ -287,15 +430,19 @@
             "type": "main",
             "index": 0
           }
-        ],
-        []
+        ]
       ]
     },
     "Send a text message": {
       "main": [
+        []
+      ]
+    },
+    "Code1": {
+      "main": [
         [
           {
-            "node": "Append row in sheet",
+            "node": "If New ID",
             "type": "main",
             "index": 0
           }
@@ -307,10 +454,10 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "434e0e73-dbd5-4aeb-bf95-37ae2091c17a",
+  "versionId": "479cb73c-74f2-4f92-8460-da3766abf7c1",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "7c601c065824a9900f0e71deb4668bf4b2ac790bf1e1d77597abf458f18b4ce7"
+    "instanceId": "539b0f9153defb41c99b9bc461a3c866eca6255064a2e35cc882617df9a0f5c3"
   },
   "id": "QhDTvADFivpmyGjx",
   "tags": []
