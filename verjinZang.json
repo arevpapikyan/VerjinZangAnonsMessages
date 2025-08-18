@@ -1,5 +1,4 @@
 {
-  "name": "verjin zang",
   "nodes": [
     {
       "parameters": {
@@ -14,10 +13,10 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -256,
-        32
+        -592,
+        112
       ],
-      "id": "c2d226f7-3887-4773-8f3e-0f6b3ac20f09",
+      "id": "21fbd250-690a-40a4-8ac0-e928146cd7ee",
       "name": "Schedule Trigger"
     },
     {
@@ -27,11 +26,11 @@
           "string": [
             {
               "name": "url",
-              "value": "=https://www.youtube.com/watch?v={{ $json.id.videoId }}"
+              "value": "=https://www.youtube.com/watch?v={{ $('If').item.json.id.videoId }}"
             },
             {
               "name": "title",
-              "value": "={{ $json.snippet.title }}"
+              "value": "={{ $('If').item.json.snippet.title }}"
             }
           ],
           "boolean": []
@@ -41,11 +40,11 @@
       "name": "Set",
       "type": "n8n-nodes-base.set",
       "position": [
-        336,
-        -80
+        448,
+        0
       ],
       "typeVersion": 1,
-      "id": "0f1483fe-c66d-467e-ae5c-c5ae3592acb2"
+      "id": "d5f1aeb7-1687-4303-ba48-4e53e69239db"
     },
     {
       "parameters": {
@@ -53,23 +52,23 @@
         "returnAll": true,
         "filters": {
           "channelId": "UC_yoNMPdmbZFK-ctvNJ_2Kg",
-          "publishedAfter": "={{ new Date(Date.now() - 5 * 60 * 1000).toISOString() }}"
+          "publishedAfter": "={{ new Date(Date.now() - 10 * 60 * 1000).toISOString() }}"
         },
         "options": {}
       },
-      "id": "7b7ef0de-44ba-402f-baa7-77040d332402",
+      "id": "83eec617-15d2-45bc-8522-0b27c2a263da",
       "name": "Get many videos",
       "type": "n8n-nodes-base.youTube",
       "typeVersion": 1,
       "position": [
-        -64,
-        32
+        -400,
+        112
       ],
       "alwaysOutputData": true,
       "credentials": {
         "youTubeOAuth2Api": {
-          "id": "SKkYAqnv9AEbQRPE",
-          "name": "YouTube account 2"
+          "id": "ysNkks8HTqKFqWEc",
+          "name": "YouTube account"
         }
       }
     },
@@ -109,10 +108,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        128,
-        32
+        -176,
+        112
       ],
-      "id": "bd6edf20-9848-48d6-bdf6-9ce2e03e1723",
+      "id": "af0d85e5-e634-43c6-8090-088ff75a125e",
       "name": "If"
     },
     {
@@ -137,14 +136,14 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 3,
       "position": [
-        528,
-        -80
+        608,
+        0
       ],
-      "id": "6bba9de3-7d86-422c-8bb6-edd35bee861b",
+      "id": "36d8d703-eda8-401f-9af4-1b7479475e2d",
       "alwaysOutputData": true,
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "QV3lzFZwnIRDqStw",
+          "id": "PlQLiimNI8sJ6Z77",
           "name": "Google Sheets account"
         }
       }
@@ -160,15 +159,15 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1,
       "position": [
-        -224,
-        320
+        -560,
+        400
       ],
-      "id": "aa64ed42-20b4-47b9-9258-50ffbc77237e",
+      "id": "35a1792a-a44b-48c6-823a-7422b8993cff",
       "webhookId": "9eee5fc4-4bce-44a3-9c74-4fe3dfc0301b",
       "credentials": {
         "telegramApi": {
-          "id": "kTKcYBpCklMcYR6r",
-          "name": "Telegram account 2"
+          "id": "pWBWhbvKQEjT4fMk",
+          "name": "Telegram account"
         }
       }
     },
@@ -194,14 +193,14 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 3,
       "position": [
-        -32,
-        320
+        -368,
+        400
       ],
-      "id": "10fb7526-51f8-4511-8583-79ec50c58760",
+      "id": "f36e49ad-d438-4485-9004-a0082c67207f",
       "alwaysOutputData": true,
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "QV3lzFZwnIRDqStw",
+          "id": "PlQLiimNI8sJ6Z77",
           "name": "Google Sheets account"
         }
       }
@@ -237,13 +236,13 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 3,
       "position": [
-        592,
-        208
+        256,
+        288
       ],
-      "id": "6fa2653a-8981-4344-b872-defae5bb08d6",
+      "id": "e32ba9f9-ac6b-4669-a5a0-e614b25af0ad",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "QV3lzFZwnIRDqStw",
+          "id": "PlQLiimNI8sJ6Z77",
           "name": "Google Sheets account"
         }
       }
@@ -278,10 +277,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        384,
-        320
+        48,
+        400
       ],
-      "id": "50e08e02-6de9-4311-8e26-697ae8f88b24"
+      "id": "90ef189b-b862-4174-9795-648717703765"
     },
     {
       "parameters": {
@@ -290,10 +289,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        736,
-        -80
+        816,
+        0
       ],
-      "id": "34060aa0-5536-4044-b70b-ccf26073311d",
+      "id": "9f7bf693-3be6-43ca-a51c-3fa9402d8001",
       "name": "Code"
     },
     {
@@ -305,16 +304,16 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        928,
-        -80
+        1008,
+        0
       ],
-      "id": "53776e63-436c-454f-9321-3adad91bab5b",
+      "id": "4ca74bf6-cf07-4989-ac4c-e18976c2bee1",
       "name": "Send a text message",
       "webhookId": "ab2b535f-962d-4735-9bc0-38c75916ef0c",
       "credentials": {
         "telegramApi": {
-          "id": "kTKcYBpCklMcYR6r",
-          "name": "Telegram account 2"
+          "id": "pWBWhbvKQEjT4fMk",
+          "name": "Telegram account"
         }
       }
     },
@@ -325,14 +324,123 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        176,
-        320
+        -160,
+        400
       ],
-      "id": "907abc09-0e22-416d-aaff-d52e1d4ddb59",
+      "id": "5b966b23-e8d0-48f7-8aff-2c86e2e49490",
       "name": "Code1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "13vWnP0i4hxw1XnfzUDQBS_rIqo11sBg8wNwj_DO80qU",
+          "mode": "list",
+          "cachedResultName": "verjin zang anons",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13vWnP0i4hxw1XnfzUDQBS_rIqo11sBg8wNwj_DO80qU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1597485469,
+          "mode": "list",
+          "cachedResultName": "Sheet2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13vWnP0i4hxw1XnfzUDQBS_rIqo11sBg8wNwj_DO80qU/edit#gid=1597485469"
+        },
+        "options": {}
+      },
+      "name": "Get Existing videoids",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 3,
+      "position": [
+        64,
+        32
+      ],
+      "id": "343d7e75-84a0-4871-9dbf-c9347073b995",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "PlQLiimNI8sJ6Z77",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b245df43-82f5-4000-90de-5a5315b8e311",
+              "leftValue": "={{ $json.videoid }}",
+              "rightValue": "={{ $('Get many videos').item.json.id.videoId }}",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        256,
+        32
+      ],
+      "id": "3f0241f5-ebd5-484f-8246-3d49f4b334ab",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "13vWnP0i4hxw1XnfzUDQBS_rIqo11sBg8wNwj_DO80qU",
+          "mode": "list",
+          "cachedResultName": "verjin zang anons",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13vWnP0i4hxw1XnfzUDQBS_rIqo11sBg8wNwj_DO80qU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1597485469,
+          "mode": "list",
+          "cachedResultName": "Sheet2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13vWnP0i4hxw1XnfzUDQBS_rIqo11sBg8wNwj_DO80qU/edit#gid=1597485469"
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "videoid",
+              "fieldValue": "={{ $('If').item.json.id.videoId }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Save videoid",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 3,
+      "position": [
+        1184,
+        -16
+      ],
+      "id": "5b453ef5-5a28-44bf-a61d-e636bb5aa9c9",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "PlQLiimNI8sJ6Z77",
+          "name": "Google Sheets account"
+        }
+      }
     }
   ],
-  "pinData": {},
   "connections": {
     "Schedule Trigger": {
       "main": [
@@ -371,7 +479,7 @@
       "main": [
         [
           {
-            "node": "Set",
+            "node": "Get Existing videoids",
             "type": "main",
             "index": 0
           }
@@ -435,7 +543,13 @@
     },
     "Send a text message": {
       "main": [
-        []
+        [
+          {
+            "node": "Save videoid",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Code1": {
@@ -448,17 +562,33 @@
           }
         ]
       ]
+    },
+    "Get Existing videoids": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "active": true,
-  "settings": {
-    "executionOrder": "v1"
-  },
-  "versionId": "479cb73c-74f2-4f92-8460-da3766abf7c1",
+  "pinData": {},
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "539b0f9153defb41c99b9bc461a3c866eca6255064a2e35cc882617df9a0f5c3"
-  },
-  "id": "QhDTvADFivpmyGjx",
-  "tags": []
+    "instanceId": "a8efa6872bb7364de58e32a9db0cc334f54932c195421f58e7bc6aa8aac87a6f"
+  }
 }
