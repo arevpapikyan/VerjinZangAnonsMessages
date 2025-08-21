@@ -19,7 +19,9 @@
         0
       ],
       "id": "21fbd250-690a-40a4-8ac0-e928146cd7ee",
-      "name": "Schedule Trigger"
+      "name": "Schedule Trigger",
+      "alwaysOutputData": false,
+      "retryOnFail": true
     },
     {
       "parameters": {
@@ -619,11 +621,11 @@
       ]
     }
   },
-  "active": false,
+  "active": true,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "543545bc-8101-4548-8455-f407b3c4317e",
+  "versionId": "b993bcda-35aa-498d-a749-e64d55fafa4f",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "a8efa6872bb7364de58e32a9db0cc334f54932c195421f58e7bc6aa8aac87a6f"
