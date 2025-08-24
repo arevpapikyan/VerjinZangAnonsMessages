@@ -7,7 +7,7 @@
           "interval": [
             {
               "field": "cronExpression",
-              "expression": "*/5 * * * *"
+              "expression": "*/15 * * * *"
             }
           ]
         }
@@ -56,7 +56,7 @@
         "returnAll": true,
         "filters": {
           "channelId": "UC_yoNMPdmbZFK-ctvNJ_2Kg",
-          "publishedAfter": "={{ new Date(Date.now() - 10 * 60 * 1000).toISOString() }}"
+          "publishedAfter": "={{ new Date(Date.now() - 20 * 60 * 1000).toISOString() }}"
         },
         "options": {}
       },
@@ -625,7 +625,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "eabe348c-2412-48eb-b20b-60cfe5dc838f",
+  "versionId": "aff3ea55-add0-41a9-a8d5-d0fa44ce5a32",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "a8efa6872bb7364de58e32a9db0cc334f54932c195421f58e7bc6aa8aac87a6f"
