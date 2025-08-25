@@ -154,7 +154,7 @@
     },
     {
       "parameters": {
-        "jsCode": "return $items(\"Get Chat IDs\").map(item => {\n  return {\n    json: {\n      chatId: item.json.id.toString(),\n      message: `${$('Set').first().json.title}\\n${$('Set').first().json.url}`\n    }\n  };\n});\n"
+        "jsCode": "return $items(\"Get Chat IDs\").map(item => {\n  return {\n    json: {\n      chatId: item.json.id.toString(),\n      message: `${$('Set').first().json.title}\\n${$('Set').first().json.url.replace(/_/g, '\\\\_')}`\n    }\n  };\n});\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -168,13 +168,13 @@
     {
       "parameters": {
         "chatId": "={{$json.chatId}}",
-        "text": "={{$json.message}}",
+        "text": "={{ $json.message }}",
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1824,
+        1840,
         -272
       ],
       "id": "4ca74bf6-cf07-4989-ac4c-e18976c2bee1",
@@ -625,7 +625,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "aff3ea55-add0-41a9-a8d5-d0fa44ce5a32",
+  "versionId": "a54e2bc8-5e33-4ac9-a69c-9218189e6389",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "a8efa6872bb7364de58e32a9db0cc334f54932c195421f58e7bc6aa8aac87a6f"
