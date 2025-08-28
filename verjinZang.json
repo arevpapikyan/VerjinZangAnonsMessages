@@ -180,12 +180,15 @@
       "id": "4ca74bf6-cf07-4989-ac4c-e18976c2bee1",
       "name": "Send a text message",
       "webhookId": "ab2b535f-962d-4735-9bc0-38c75916ef0c",
+      "retryOnFail": false,
+      "maxTries": 5,
       "credentials": {
         "telegramApi": {
           "id": "pWBWhbvKQEjT4fMk",
           "name": "Telegram account"
         }
-      }
+      },
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -625,7 +628,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "a54e2bc8-5e33-4ac9-a69c-9218189e6389",
+  "versionId": "70fcd251-37c6-40ea-b1fe-bf9d1f5e04b8",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "a8efa6872bb7364de58e32a9db0cc334f54932c195421f58e7bc6aa8aac87a6f"
